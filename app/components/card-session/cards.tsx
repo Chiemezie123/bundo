@@ -1,80 +1,149 @@
-import { Typography } from '@/components/typography'
-import React from 'react'
-import BundoLocationIcon from '@/assets/svg2/bundoLocationIcon'
-import Location from '@/assets/svg2/location'
-import TagIcon from '@/assets/svg2/tagIcon'
-import Star from '@/assets/svg2/star'
-import { Button } from '@/components/button'
-import Image from 'next/image'
-import Love from '@/assets/svg2/love'
-import { cardProps } from './index.types'
+'use client'
 
-export default function cards(props:cardProps) {
-    const {image, brandName,description,location,tags1,tags2,tags3,reviews} = props
+import { Typography } from "@/components/typography";
+import React from "react";
+import BundoLocationIcon from "@/assets/svg2/bundoLocationIcon";
+import Location from "@/assets/svg2/location";
+import TagIcon from "@/assets/svg2/tagIcon";
+import Star from "@/assets/svg2/star";
+import { Button } from "@/components/button";
+import Image from "next/image";
+import Love from "@/assets/svg2/love";
+import { cardProps } from "./index.types";
+import Plus from "@/assets/svg2/plus";
+
+export default function Cards(props: cardProps) {
+  const {
+    image,
+    brandName,
+    description,
+    location,
+    tags1,
+    tags2,
+    tags3,
+    reviews,
+  } = props;
   return (
-    <div className=' relative w-[124px] h-[302px] pl-[20px] pt-[14px] pr-[9px] pb-[19px] bg-[#FCFBF8] border-b-[0.692px] border-b-[#D6EEDD] rounded-[10px]'>
-        {/* first */}
-        <div className='relative inset-0 border'>
-        <div className='absolute right-0'>
-            <Love/>
+    <div className=" relative flex flex-col justify-between flex-1 w-full h-[302px] pl-[20px] pt-[14px] pr-[9px] pb-[19px] bg-[#FCFBF8] border-b-[0.692px] border-b-[#D6EEDD] rounded-[10px]">
+      {/* first */}
+      <div className="relative inset-0 mb-[10px]">
+        <div className="absolute right-0">
+          <Love/>
         </div>
         <div>
-            <Image src={image} alt={'image'}  />
+          {image && (
+            <Image src={image} alt="Brand image" width={100} height={100} />
+          )}
         </div>
+      </div>
+      {/* second */}
+      <div className="relative flex flex-col items-start gap-3 flex-1">
+        <div className="flex flex-col items-start gap-0.5">
+          <div>
+            <Typography
+              variant="h-xs"
+              font="sans"
+              color="palm-green-950"
+              fontWeight="semibold"
+              className="leading-normal"
+            >
+              {brandName}
+            </Typography>
+          </div>
+          <div className="flex items-center gap-1">
+          <Location/>
+            <Typography
+              variant="c-s"
+              font="sans"
+              fontWeight="regular"
+              color="mine-shaft-950"
+              className="leading-normal"
+            >
+              5 minutes away from you
+            </Typography>
+          </div>
+
+          <div>
+            <Typography
+              color="fuscous-gray-950"
+              variant="c-m"
+              fontWeight="regular"
+              font="sans"
+              className="leading-normal"
+            >
+              {description}
+            </Typography>
+          </div>
         </div>
-        {/* second */}
-        <div className='relative inline-flex flex-col items-start gap-3'>
-            <div className='flex flex-col items-start gap-0.5'>
-                <div>
-                    <Typography>
-                    {brandName}
-                    </Typography>
-                </div>
-                <div>
-                    <div>
-                        <BundoLocationIcon/>
-                    </div>
-                    <Typography>
-                    5 minutes away from you
-                    </Typography>
-                </div>
-                <div>
-                    <Typography>
-                        {description}
-                    </Typography>
-                </div>
+        <div className="flex w-[155px] flex-col items-start gap-2 ">
+          <div className="flex items-center gap-1">
+            <div>
+              <Location/>
             </div>
-            <div className='flex w-[155px] flex-col items-start gap-2'>
-                <div>
-                    <div>
-                        <Location/>
-                    </div>
-                    <Typography>
-                        {location}
-                    </Typography>
-                </div>
-                <div className='flex w-[111px] h-[12px] items-center gap-[3.46px]'>
-                <TagIcon/>
-                <Typography>{tags1}</Typography>
-                <Typography>{tags2}</Typography>
-                <Typography>{tags3}</Typography>
-                </div>
-                <div className='w-[133.212px] h-[11px]'>
-                    <div className='flex w-[48.444px] h-[10.023px] justify-between items-center'>
-                        <Star/>
-                        <Star/>
-                        <Star/>
-                        <Star/>
-                        <Star/>
-                    </div>
-                    <Typography>{reviews}</Typography>
-                </div>
+            <Typography
+              color="mine-shaft-900"
+              variant="c-m"
+              fontWeight="regular"
+              font="sans"
+              className="leading-normal"
+            >
+              {location}
+            </Typography>
+          </div>
+          <div className="flex w-[111px] h-[12px] items-center gap-[3.46px]">
+            <TagIcon/>
+            <Typography
+              color="chateau-green-500"
+              variant="c-m"
+              fontWeight="regular"
+              font="sans"
+              className=" leading-normal underline decoration-solid decoration-slice decoration-auto underline-offset-auto"
+            >
+              {tags1}
+            </Typography>
+            <Typography
+              color="chateau-green-500"
+              variant="c-m"
+              fontWeight="regular"
+              font="sans"
+              className=" leading-normal underline decoration-solid decoration-slice decoration-auto underline-offset-auto"
+            >
+              {tags2}
+            </Typography>
+            <Typography
+              color="chateau-green-500"
+              variant="c-m"
+              fontWeight="regular"
+              font="sans"
+              className=" leading-normal underline decoration-solid decoration-slice decoration-auto underline-offset-auto"
+            >
+              {tags3}
+            </Typography>
+          </div>
+          <div className="w-[133.212px] h-[11px] flex items-center gap-1">
+            <div className="flex w-[48.444px] h-[10.023px] justify-between items-center">
+              <Star />
+              <Star />
+              <Star />
+              <Star />
+              <Star />
             </div>
+            <Typography
+              color="mine-shaft-950"
+              variant="c-m"
+              fontWeight="regular"
+              font="sans"
+              className="leading-normal"
+            >
+              {reviews ?? "No reviews yet"}
+            </Typography>
+          </div>
         </div>
-        {/* third */}
-        <div className='relative'>
-            <Button children={'View Page'}/>
-        </div>
+      </div>
+      {/* third */}
+      <div className="relative">
+        <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans " size="primary" />
+      </div>
     </div>
-  )
+  );
 }

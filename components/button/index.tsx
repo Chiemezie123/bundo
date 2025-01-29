@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { Spinner } from "../spinner";
 import { Typography } from "../typography";
-
+import { TypographyColors } from "../typography/index.types";
  const buttonVariants = cva(
   "rounded transition-all ease-in-out duration-400 rounded-[5px]",
   {
@@ -38,6 +38,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   loading?: boolean;
   Icon?: React.ReactNode;
+  color:TypographyColors;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -49,6 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       children,
       Icon,
+      color="white",
       loading = false,
       ...props
     },
@@ -68,7 +70,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
            Icon
         )}
         {!loading && (
-          <Typography variant={"div"} className="!text-[inherit]">
+          <Typography variant={"div"} color={color} className="">
             {" "}
             <div>{children}</div>
           </Typography>
