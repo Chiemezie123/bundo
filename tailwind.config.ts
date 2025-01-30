@@ -45,7 +45,7 @@ const config: Config = {
         "h-xs": ["0.875rem", { lineHeight: "15.96px", fontWeight: 600 }],
 
         // P-tag element styles
-        "p-xxl": ["1.5rem", { lineHeight: "32px", fontWeight: 400 }],
+        "p-xxl": ["1.5rem", { lineHeight: "32px", fontWeight: 500 }],
         "p-xl": ["1.1875rem", { lineHeight: "28px", fontWeight: 400 }],
         "p-l": ["1rem", { lineHeight: "16px", fontWeight: 300 }],
         "p-m": ["0.875rem", { lineHeight: "20.02px", fontWeight: 400 }],

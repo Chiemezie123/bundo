@@ -61,7 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         className={cn(
             buttonVariants({ variant, size, types, className }),
-          "flex items-center justify-center gap-4",
+          "flex items-center justify-center gap-[10px]",
         )}
         ref={ref}
         {...props}
