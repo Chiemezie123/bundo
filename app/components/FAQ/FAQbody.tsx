@@ -6,9 +6,9 @@ import { FAQarray } from "@/constants/data";
 
 export default function FAQbody() {
   return (
-    <div className="flex flex-col items-start gap-5 w-[598px]">
-      {FAQarray.map((items) => (
-        <div className="flex items-start justify-between gap-4 w-full py-[18px] border-b-[0.5px] border-dashed border-[#889385]">
+    <div className="flex flex-col items-start gap-5 w-[598px] mxs:w-full">
+      {FAQarray.map((items,index) => (
+        <div key={index} className="flex items-start justify-between gap-4 w-full py-[18px] border-b-[0.5px] border-dashed border-[#889385]">
           <Typography
             variant="h-m"
             color="palm-green-950"

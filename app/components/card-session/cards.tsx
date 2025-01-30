@@ -27,7 +27,7 @@ export default function Cards(props: cardProps) {
     <div className=" relative flex flex-col justify-between flex-1 w-full h-[302px] pl-[20px] pt-[14px] pr-[9px] pb-[19px] bg-[#FCFBF8] border-b-[0.692px] border-b-[#D6EEDD] rounded-[10px]">
       {/* first */}
       <div className="relative inset-0 mb-[10px]">
-        <div className="absolute right-0">
+        <div className="absolute right-0 mlg:right-[10px] mxs:right-0">
           <Love/>
         </div>
         <div>
@@ -77,7 +77,7 @@ export default function Cards(props: cardProps) {
         </div>
         <div className="flex w-[155px] flex-col items-start gap-2 ">
           <div className="flex items-center gap-1">
-            <div>
+            <div className="w-[12.451px] h-[12.451px] bg-[#D6EEDD] rounded-full flex justify-center items-center">
               <Location/>
             </div>
             <Typography
@@ -91,7 +91,9 @@ export default function Cards(props: cardProps) {
             </Typography>
           </div>
           <div className="flex w-[111px] h-[12px] items-center gap-[3.46px]">
+            <div className="w-[12.451px] h-[12.451px] bg-[#D6EEDD] rounded-full flex justify-center items-center">
             <TagIcon/>
+            </div>
             <Typography
               color="chateau-green-500"
               variant="c-m"
@@ -120,7 +122,7 @@ export default function Cards(props: cardProps) {
               {tags3}
             </Typography>
           </div>
-          <div className="w-[133.212px] h-[11px] flex items-center gap-1">
+          <div className="w-full h-[11px] flex items-center gap-1">
             <div className="flex w-[48.444px] h-[10.023px] justify-between items-center">
               <Star />
               <Star />
@@ -141,8 +143,8 @@ export default function Cards(props: cardProps) {
         </div>
       </div>
       {/* third */}
-      <div className="relative">
-        <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans " size="primary" />
+      <div className="relative flex items-center justify-center mt-[5px]">
+        <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans mlg:w-full " size="primary" />
       </div>
     </div>
   );

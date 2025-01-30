@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
+import tvSans from "./fonts";
 
 const config: Config = {
   content: [
@@ -15,6 +16,7 @@ const config: Config = {
       lg: "1050px",
       xl: "1280px",
       "2xl": "1440px",
+      mxxl: { max: "1433px" },
       mxl: { max: "1279px" },
       mlg: { max: "1049px" },
       mmlg: { max: "976px" },
@@ -29,15 +31,15 @@ const config: Config = {
       "mxl-height": { raw: "(max-height: 850px)" },
     },
     fontFamily: {
-      sans: ['TV 2 Sans Display', 'sans-serif'],
+      tvSans: ["var(--font-tvSans)", ...fontFamily.sans],
     },
     extend: {
       backgroundImage: {},
       fontSize: {
         // H-tags element styles
         "h-xxl": ["3.875rem", { lineHeight: "75.95px", fontWeight: 700 }],
-        "h-xl": ["2rem", { lineHeight: "40px", fontWeight: 700 }],
-        "h-l": ["1.5rem", { lineHeight: "24px", fontWeight: 700 }],
+        "h-xl": ["2.5rem", { lineHeight: "40px", fontWeight: 700 }],
+        "h-l": ["2rem", { lineHeight: "24px", fontWeight: 700 }],
         "h-m": ["1.125rem", { lineHeight: "24px", fontWeight: 700 }],
         "h-s": ["1rem", { lineHeight: "24px", fontWeight: 700 }],
         "h-xs": ["0.875rem", { lineHeight: "15.96px", fontWeight: 600 }],

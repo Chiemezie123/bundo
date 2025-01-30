@@ -85,15 +85,15 @@ const colorClasses = {
 export const typography = cva("", {
   variants: {
     intent: {
-      "h-xxl": "text-h-xxl mmd:text-h-xl mxs:text-h-l",
+      "h-xxl":"text-h-xxl mxxl:text-[3rem] mlg:text-h-xl mmd:text-h-xl mxs:text-h-l",
       "h-xl": "text-h-xl mmd:text-h-l mxs:text-h-m ",
       "h-l": "text-h-l mmd:text-h-m mxs:text-h-s",
-      "h-m": "text-m mmd:text-s mxs:text-h-s",
+      "h-m": "text-h-m mmd:text-h-s mxs:text-h-xs",
       "h-s": "text-h-s mmd:text-h-xs mxs:text-p-xxl",
-      "h-xs": "text-h-xs",
-      "p-xxl": "text-p-xxl mmd:p-xl",
-      "p-xl": "text-p-xl mmd:p-l",
-      "p-l": "text-p-l",
+      "h-xs": "text-h-xs mmd:text-p-m mxs:text-p-s",
+      "p-xxl": "text-p-xxl mmd:text-p-xl mxs:text-p-l",
+      "p-xl": "text-p-xl mmd:text-p-l mxs:text-p-m",
+      "p-l": "text-p-l   mmd:text-p-m  mxs:text-p-s" ,
       "p-m": "text-p-m",
       "p-s": "text-p-s",
       "c-xxl": "text-c-xxl ",
@@ -106,7 +106,7 @@ export const typography = cva("", {
       div: "",
     },
     font: {
-      sans: "font-sans",
+      sans: "font-tvSans",
     },
     color: colorClasses,
     fontWeight: {

@@ -15,6 +15,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:1,
   },
   {
     image: secondVendor,
@@ -27,6 +28,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:2
   },
   {
     image: thirdVendor,
@@ -39,6 +41,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:3
   },
   {
     image: fourthVendor,
@@ -51,6 +54,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:4
   },
   {
     image: secondVendor,
@@ -63,6 +67,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:5
   },
   {
     image: thirdVendor,
@@ -75,6 +80,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:6
   },
   {
     image: firstVendor,
@@ -87,6 +93,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:7
   },
   {
     image: secondVendor,
@@ -99,6 +106,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:8
   },
   {
     image: fourthVendor,
@@ -111,6 +119,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:9
   },
   {
     image: thirdVendor,
@@ -123,6 +132,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:10
   },
   {
     image: firstVendor,
@@ -135,6 +145,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:11
   },
   {
     image: secondVendor,
@@ -147,6 +158,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:12
   },
   {
     image: firstVendor,
@@ -159,6 +171,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:13
   },
   {
     image: firstVendor,
@@ -171,6 +184,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:14
   },
   {
     image: thirdVendor,
@@ -183,6 +197,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:15
   },
   {
     image: secondVendor,
@@ -195,6 +210,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:16
   },
   {
     image: firstVendor,
@@ -207,6 +223,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:17
   },
   {
     image: fourthVendor,
@@ -219,6 +236,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:18
   },
   {
     image: thirdVendor,
@@ -231,6 +249,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:19
   },
   {
     image: fourthVendor,
@@ -243,6 +262,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:20
   },
   {
     image: thirdVendor,
@@ -255,6 +275,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:21
   },
   {
     image: fourthVendor,
@@ -267,6 +288,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:22
   },
   {
     image: thirdVendor,
@@ -279,6 +301,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:23
   },
   {
     image: fourthVendor,
@@ -291,6 +314,7 @@ export const listingCard = [
     tags2: "Catering",
     tags3: "Food",
     reviews: "3 ratings and reviews",
+    id:24
   },
 ];
 
