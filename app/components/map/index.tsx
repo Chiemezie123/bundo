@@ -1,28 +1,34 @@
 'use client'
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/button";
 import { Typography } from "@/components/typography";
 import EmptyState from "@/components/emptyLocationState";
 import Plus from "@/assets/svg2/plus";
 import GoogleMapComponent from "../googleMapComp";
 import axios from "axios";
+import { BusinessArray } from "../googleMapComp/index.types";
 
 export default function Map() {
-
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-//     useEffect(() => {
-//   const getLocation = async () => {
-//     try {
-//       const response = await axios.get(apiUrl);
-//       console.log(response, "bross");
-//     } catch (error) {
-//       console.error("Error fetching location data:", error);
-//     }
-//   };
-
-//   getLocation();
-// }, [apiUrl]); 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
+  const [location , setLocation] = useState<BusinessArray>([]);
+  useEffect(() => {
+    const getAllLocation = async () => {
+      if (!apiUrl) {
+        console.error("NEXT_PUBLIC_API_URL is not set.");
+        return;
+      }
+  
+      try {
+        const response = await axios.get(apiUrl);
+        const { data } = response?.data;
+        setLocation(data);
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+      }
+    };
+  
+    getAllLocation();
+  }, [apiUrl]); 
 
   return (
     <div className="max-w-[1214.833px] mx-auto mt-[50px] flex flex-col gap-[32px] mlg:px-[24px]">
@@ -40,7 +46,7 @@ export default function Map() {
         </div>
       </div>
       <div id="map" className="border border-[#C9C2B6] rounded-[20px] w-full h-[678px] flex items-center justify-center">
-            <GoogleMapComponent/>
+            <GoogleMapComponent businesses={location}/>
       </div>
     </div>
   );
