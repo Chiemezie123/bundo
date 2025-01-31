@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { JSX } from "react";
 import { cn } from "@/utils/helpers";
 import { cva } from "class-variance-authority";
 

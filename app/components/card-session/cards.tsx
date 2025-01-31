@@ -2,7 +2,7 @@
 
 import { Typography } from "@/components/typography";
 import React from "react";
-import BundoLocationIcon from "@/assets/svg2/bundoLocationIcon";
+
 import Location from "@/assets/svg2/location";
 import TagIcon from "@/assets/svg2/tagIcon";
 import Star from "@/assets/svg2/star";

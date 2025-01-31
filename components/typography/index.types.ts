@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export const variantMapping = {
     "h-xxl": "h1",
     "h-xl": "h2",
