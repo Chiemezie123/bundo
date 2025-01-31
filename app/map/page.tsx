@@ -6,7 +6,7 @@ import Map from '../components/map'
 export default function Page() {
     
   return (
-    <div>
+    <div className='pt-[20px]'>
         <NavBar/>
         <Map/>
         <Footer/>
