@@ -5,7 +5,7 @@ import CardSession from "./components/card-session";
 import FAQ from "./components/FAQ";
 import Footer from "./components/footer";
 import useFcmToken from "@/hooks/use-fcm";
-import { fetchToken } from "@/firebase";
+
 export default function Home() {
   const { token, notificationPermissionStatus } = useFcmToken();
 

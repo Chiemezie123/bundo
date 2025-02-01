@@ -6,6 +6,7 @@ import { fetchToken, messaging } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Typography } from "@/components/typography";
 
 // import { toast } from "sonner";
 
@@ -35,7 +36,7 @@ async function getNotificationPermissionAndToken() {
 
 const useFcmToken = () => {
   const [notificationPermissionStatus, setNotificationPermissionStatus] = useState<NotificationPermission | null>(null); // State to store the notification permission status.
-  const [token, setToken] = useState<string | null>(null); 
+  const [token, setToken] = useState<string | null>(""); 
   const retryLoadToken = useRef(0);
   const isLoading = useRef(false); 
 
@@ -86,39 +87,43 @@ const useFcmToken = () => {
 
   useEffect(() => {
     const setupListener = async () => {
-      if (!token) return; 
-  
-      console.log(`onMessage registered with token ${token}`);
-      const m = await messaging();
-      if (!m) return;
-  
-      const unsubscribe = onMessage(m, (payload) => {
-        if (Notification.permission !== "granted") return;
-        console.log("Foreground push notification received:", payload);
-  
-        // Display notification using react-toastify
-        if (payload.notification) {
-          toast.info(
-            <div>
-              <strong>{payload.notification.title}</strong> {/* Title on top */}
-              <p>{payload.notification.body}</p> {/* Body underneath */}
-            </div>,
-            {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
+        if (!token) return;
+      
+        console.log(`onMessage registered with token ${token}`);
+      
+        try {
+          const m = await messaging();
+          if (!m) return;
+      
+          const unsubscribe = onMessage(m, (payload) => {
+            if (Notification.permission !== "granted") return;
+            console.log("Foreground push notification received:", payload);
+      
+            if (payload.notification) {
+              toast.info(
+                <div>
+                  <Typography>{payload.notification.title}</Typography>
+                  <Typography>{payload.notification.body}</Typography>
+                </div>,
+                {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                }
+              );
             }
-          );
+          });
+      
+          return unsubscribe;
+        } catch (error) {
+          console.error("Error setting up onMessage listener:", error);
         }
-      });
-  
-      return unsubscribe;
-    };
-  
+      };
+      
     let unsubscribe: Unsubscribe | null = null;
   
     setupListener().then((unsub) => {
