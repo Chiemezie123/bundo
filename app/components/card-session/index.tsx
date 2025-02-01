@@ -3,8 +3,14 @@ import React from "react";
 import { listingCard } from "@/constants/data";
 import Cards from "./cards";
 import { Typography } from "@/components/typography";
+import { Button } from "@/components/button";
 
-export default function CardSession() {
+interface buttonProps {
+  onClick? :()=> void
+  token:string
+}
+
+export default function CardSession(props:buttonProps) {
   return (
     <div className="mt-[56px] max-w-[1214.833px] mx-auto flex flex-col gap-[25px] pb-[100px] mxs:mt-[48px] mlg:px-[24px] mxs:pb-[50px]">
       <div className="flex items-center gap-[20px] mxs:justify-between">
@@ -35,6 +41,10 @@ export default function CardSession() {
           <p className="col-span-full text-center">No listings available</p>
         )}
       </div>
+        <div className="flex mx-auto items-center flex-col gap-4">
+          <Typography> click button below to subscribe to a notification</Typography>
+          <Button disabled={!props.token} onClick={props.onClick} color="white" children=" push notification" className="h-[35px] text-c-lm font-sans " size="primary"/>
+        </div>
     </div>
   );
 }

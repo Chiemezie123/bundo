@@ -10,11 +10,19 @@ export default function Slider() {
   return (
     <div className="border flex flex-col gap-[32px]">
       <div className="border bg-white shadow-[0px_3px_5px_rgba(9,30,66,0.2)] h-[59px] flex justify-end items-center px-[24px]">
-        <Close/>
+        <Close />
       </div>
       <div className="flex flex-col gap-[32px] px-[24px]">
         <div>
-          <Typography variant="h-m" color="mine-shaft-950" font="sans" fontWeight="medium" className="leading-normal" >Add New Business</Typography>
+          <Typography
+            variant="h-m"
+            color="mine-shaft-950"
+            font="sans"
+            fontWeight="medium"
+            className="leading-normal"
+          >
+            Add New Business
+          </Typography>
         </div>
         <div className="flex flex-col gap-[24px]">
           <div className="flex items-start flex-col gap-[24px] ">
@@ -34,12 +42,12 @@ export default function Slider() {
               />
             </div>
             <div className="w-full">
-               <Button
-                          Icon={<Plus />}
-                          children={"Add Business"}
-                          color="white"
-                          className="text-c-l w-full"
-                        />
+              <Button
+                Icon={<Plus />}
+                children={"Add Business"}
+                color="white"
+                className="text-c-l w-full"
+              />
             </div>
           </div>
           <div className="flex flex-col selection:items-start gap-[32px]">
@@ -53,10 +61,10 @@ export default function Slider() {
             </div>
             <div>
               <Button
-                         children={"Save Business "}
-                         color="white"
-                         className="text-c-l w-full"
-                       />
+                children={"Save Business "}
+                color="white"
+                className="text-c-l w-full"
+              />
             </div>
           </div>
         </div>

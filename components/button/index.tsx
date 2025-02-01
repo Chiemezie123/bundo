@@ -11,7 +11,7 @@ import { TypographyColors } from "../typography/index.types";
     variants: {
       variant: {
         primary:
-          " bg-chateau-green-500 hover:bg-chateau-green-200 text-white disabled:bg-fuscous-gray-400 disabled:text-black  disabled:cursor-not-allowed", // blue
+          " bg-chateau-green-500 hover:bg-chateau-green-200 focus:bg-chateau-green-500 text-white disabled:bg-fuscous-gray-400 disabled:text-black  disabled:cursor-not-allowed", // blue
         secondary:
           "bg-GB text-N0 hover:bg-GNH disabled:opacity-50 hover:disabled:bg-GLA disabled:cursor-not-allowed", // extra light
       },
