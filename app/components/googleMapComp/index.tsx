@@ -6,23 +6,23 @@ import { BusinessArray } from "./index.types";
 import { getBusinessLocations } from "./getLocation";
 
 interface BusinessListProps {
-  businesses: BusinessArray; // Array of Business objects
+  businesses: BusinessArray; 
 }
 
-// Define the map container styles
+
 const mapContainerStyle: React.CSSProperties = {
   width: "100%",
   height: "678px",
   borderRadius: "20px",
 };
 
-// Define the default center of the map
+
 const center: google.maps.LatLngLiteral = {
   lat: 37.7749, // Default latitude (San Francisco)
   lng: -122.4194, // Default longitude (San Francisco)
 };
 
-// Move libraries outside the component to avoid re-renders
+
 const libraries: ("places" | "marker")[] = ["marker"];
 
 // Define the GoogleMapComponent

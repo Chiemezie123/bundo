@@ -26,7 +26,7 @@ const messaging = async () => {
       const fcmMessaging = await messaging();
       if (fcmMessaging) {
         const token = await getToken(fcmMessaging, {
-          vapidKey:"BD3aq6k0yhrmo9T2GxDUdnQ2DxRhW4-hf4FcDojRsTa4rlrDLynobBuXh6Q_9OSw3OvgcGVmlQtURHOXIMP0o8E",
+          vapidKey:process.env.NEXT_PUBLIC_VAPID_KEY,
         });
         return token;
       }

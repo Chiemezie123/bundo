@@ -8,21 +8,21 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Typography } from "@/components/typography";
 
-// import { toast } from "sonner";
+
 
 async function getNotificationPermissionAndToken() {
-  // Step 1: Check if Notifications are supported in the browser.
+ 
   if (!("Notification" in window)) {
     console.info("This browser does not support desktop notification");
     return null;
   }
 
-  // Step 2: Check if permission is already granted.
+
   if (Notification.permission === "granted") {
     return await fetchToken();
   }
 
-  // Step 3: If permission is not denied, request permission from the user.
+ 
   if (Notification.permission !== "denied") {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
