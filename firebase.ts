@@ -3,15 +3,14 @@ import { initializeApp } from "firebase/app";
 import { onMessage, getMessaging, getToken, isSupported  } from "firebase/messaging";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDWI-nn-XuigP-pAcIOgGseC9LnguIuZz4",
-    authDomain: "bundo-b3b14.firebaseapp.com",
-    projectId: "bundo-b3b14",
-    storageBucket: "bundo-b3b14.firebasestorage.app",
-    messagingSenderId: "111875441799",
-    appId: "1:111875441799:web:f6ed0f0ddf0c7d2e592422",
-    measurementId: "G-RF8PJQFE1V"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
   };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
