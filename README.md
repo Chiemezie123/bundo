@@ -1,6 +1,6 @@
 Bundo
 
- The project is designed to be responsive across four major screen sizes: 1440px, 1024px, 768px, and 425px.
+ The project is designed to be responsive across five major screen sizes: 1440px, 1024px, 768px, 425px and 375px.
 
 Features
 1. Landing Page

@@ -215,7 +215,7 @@ export default function FooterBody() {
                 Keep up with us
               </Typography>
             </div>
-            <div className="inline-flex items-start gap-[25px] mxs:gap-[18px] mxxs:flex-col">
+            <div className="inline-flex items-start gap-[25px] mxs:gap-[18px] mxxs:gap-[10px]">
               <div className="flex items-center">
                 <Instagram />
                 <Typography
