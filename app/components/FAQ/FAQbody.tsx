@@ -1,8 +1,9 @@
 import { Typography } from "@/components/typography";
 import Image from "next/image";
 import React from "react";
-import ArrowDown from "@/assets/images/Arrow - Down Circle.svg";
+// import ArrowDown from "@/assets/images/Arrow - Down Circle.svg";
 import { FAQarray } from "@/constants/data";
+import ArrowDown from "@/assets/svg2/arrowDown";
 
 export default function FAQbody() {
   return (
@@ -18,7 +19,8 @@ export default function FAQbody() {
             {items.question}
           </Typography>
           <div>
-            <Image src={ArrowDown} alt="arrow-down" height={24} width={24} />
+            {/* <Image src={ArrowDown} alt="arrow-down" height={24} width={24} /> */}
+            <ArrowDown/>
           </div>
         </div>
       ))}

@@ -10,12 +10,11 @@ import Twitter from "@/assets/svg2/twitter";
 export default function FooterBody() {
   return (
     <div className="flex gap-[100px] mxs:flex-col-reverse">
-      <div className="relative w-[377px] h-[562px] rounded-[15.994px] mmd:hidden mxs:block">
+      <div className="relative w-[377px] h-[562px] rounded-[15.994px] mmd:hidden mxs:block mxxs:w-[340px]">
         <Image className="absolute" src={FrameImage} alt="frame" fill />
       </div>
       <div className=" flex flex-col gap-[250px] mxs:gap-[58px]">
-        {/* <div className="grid grid-cols-2 gap-[49px] max-w-[380px] */}
-        <div className="flex items-start gap-[49px] w-[673px] mxs:grid mxs:grid-cols-2 mxs:w-[380px]">
+        <div className="flex items-start gap-[49px] w-[673px] mxs:grid mxs:grid-cols-2 mxs:w-[380px] mxxs:w-[340px]">
           <div className="flex flex-col gap-[20px]">
             <div>
               <Typography
@@ -216,7 +215,7 @@ export default function FooterBody() {
                 Keep up with us
               </Typography>
             </div>
-            <div className="inline-flex items-start gap-[25px] mxs:gap-[18px]">
+            <div className="inline-flex items-start gap-[25px] mxs:gap-[18px] mxxs:flex-col">
               <div className="flex items-center">
                 <Instagram />
                 <Typography
