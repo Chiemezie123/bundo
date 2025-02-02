@@ -144,7 +144,7 @@ export default function Cards(props: cardProps) {
       </div>
       {/* third */}
       <div className="relative flex items-center justify-center mt-[5px]">
-        <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans mlg:w-full mxxs:text-c-m" size="primary" />
+        <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans mlg:w-full mxxs:text-c-m" size="primary"/>
       </div>
     </div>
   );
