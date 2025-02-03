@@ -33,31 +33,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
     getAllLocation();
   }, [apiUrl]); 
 
-  const handleFormSubmit = (formData:any) => {
 
-    console.log(formData, "this is formData");
-
-    // try {
-    //   const { lat, lng } = await geocodeAddress(formData.address);
-    //   const response = await fetch('/api/locations/create', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ ...formData, lat, long: lng }),
-    //   });
-
-    //   if (response.ok) {
-    //     window.location.reload();
-    //   } else {
-    //     console.error('Failed to create location');
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
-  };
-
-  console.log(openSlider, 'openSlider')
   const handleClick =()=>{
     setOpenSlider((props)=>!props)
   }

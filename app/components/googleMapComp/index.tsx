@@ -1,66 +1,38 @@
 'use client';
 
-import React, { useRef, useEffect } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import React, { useEffect, useRef } from "react";
 import { BusinessArray } from "./index.types";
 import { getBusinessLocations } from "./getLocation";
 
 interface BusinessListProps {
-  businesses: BusinessArray; 
+  businesses: BusinessArray;
 }
 
-
-const mapContainerStyle: React.CSSProperties = {
-  width: "100%",
-  height: "678px",
-  borderRadius: "20px",
-};
-
-
-const center: google.maps.LatLngLiteral = {
-  lat: 37.7749, // Default latitude (San Francisco)
-  lng: -122.4194, // Default longitude (San Francisco)
-};
-
-
-const libraries: ("places" | "marker")[] = ["marker"];
-
-// Define the GoogleMapComponent
 const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
-  const mapRef = useRef<google.maps.Map | null>(null);
+  const mapRef = useRef<HTMLDivElement | null>(null); 
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
 
   const locations = getBusinessLocations(businesses);
 
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCxQwyVPobLvtCQ5T0lEnBM4203mqODvSk", // Replace with your API key
-    libraries,
-  });
-
   useEffect(() => {
-    if (!isLoaded || !google?.maps?.marker?.AdvancedMarkerElement) {
-      console.error("Google Maps API not fully loaded or AdvancedMarkerElement is missing.");
-      return;
-    }
+    
+    const initMap = async () => {
+      if (!mapRef.current) return;
 
-    if (mapRef.current) {
+      // Request needed libraries
+      const { Map } = (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
+      const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker")) as google.maps.MarkerLibrary;
+
+      // Initialize the map
+      const map = new Map(mapRef.current, {
+        center: { lat: 37.7749, lng: -122.4194 },
+        zoom: 10,
+        mapId: "9c1573fa8e452936",
+      });
+
       // Clear existing markers
       markersRef.current.forEach((marker) => (marker.map = null));
       markersRef.current = [];
-
-      // Define custom icon for markers
-      const icon = {
-        url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png", // Replace with your icon URL
-        size: new google.maps.Size(20, 32), // Icon size
-        origin: new google.maps.Point(0, 0), // Icon origin
-        anchor: new google.maps.Point(0, 32), // Icon anchor
-      };
-
-      // Define custom shape for markers
-      const shape = {
-        coords: [1, 1, 1, 20, 18, 20, 18, 1], // Define the clickable region
-        type: "poly", // Shape type
-      };
 
       // Create new markers
       locations.forEach((location, index) => {
@@ -72,59 +44,47 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
             style="width: 20px; height: 32px;"
           />
         `;
-        const marker = new google.maps.marker.AdvancedMarkerElement({
-          map: mapRef.current,
+
+        const marker = new AdvancedMarkerElement({
+          map: map,
           position: {
-            lat: location.coordinates[1], // Latitude
-            lng: location.coordinates[0], // Longitude
+            lat: location.coordinates[1],
+            lng: location.coordinates[0], 
           },
-          title: `Business Location ${index + 1}`, // Optional: Add a title
-          gmpClickable: true, // Make the marker clickable
-          gmpDraggable: false, // Disable dragging
+          title: `Business Location ${index + 1}`, 
           content: content, // Add custom icon
         });
+
         markersRef.current.push(marker);
       });
-    }
-  }, [isLoaded, locations]);
+    };
 
-  if (!isLoaded) {
-    return <div>Loading Map...</div>;
-  }
+    // Load the Google Maps script
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCxQwyVPobLvtCQ5T0lEnBM4203mqODvSk&libraries=marker`;
+    script.async = true;
+    script.onload = () => {
+      initMap().catch((error) => {
+        console.error("Error initializing map:", error);
+      });
+    };
+    document.head.appendChild(script);
 
-  if (loadError) {
-    return <div>Error loading Google Maps. Please try again later.</div>;
-  }
+    // Cleanup function
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, [locations]);
 
   return (
-    <GoogleMap
-      mapContainerStyle={mapContainerStyle}
-      zoom={10} // Default zoom level
-      center={center}
-      onLoad={(map) => {
-        mapRef.current = map;
+    <div
+      ref={mapRef}
+      style={{
+        width: "100%",
+        height: "678px",
+        borderRadius: "20px",
       }}
-      onUnmount={() => {
-        mapRef.current = null;
-      }}
-      mapId="9c1573fa8e452936" 
-    >
-      {/* Fallback Markers in case AdvancedMarkerElement fails */}
-      {locations.map((location, index) => (
-        <Marker
-          key={index}
-          position={{
-            lat: location.coordinates[1],
-            lng: location.coordinates[0],
-          }}
-          icon={{
-            url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png", // Fallback icon
-            scaledSize: new google.maps.Size(20, 32), // Fallback icon size
-          }}
-          title={`Business Location ${index + 1}`} // Fallback title
-        />
-      ))}
-    </GoogleMap>
+    />
   );
 };
 

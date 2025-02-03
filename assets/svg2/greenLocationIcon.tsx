@@ -19,7 +19,7 @@ export default function GreenLocationIcon(props:sizProps) {
         height="24"
         transform="translate(0.00195312)"
         fill="white"
-        fill-opacity="0.01"
+        fillOpacity="0.01"
       />
       <path
         fillRule="evenodd"

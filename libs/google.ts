@@ -10,7 +10,7 @@ export const autocomplete = async (input: string) => {
     const response = await client.placeAutocomplete({
       params: {
         input,
-        key:"AIzaSyCxQwyVPobLvtCQ5T0lEnBM4203mqODvSk",
+        key:process.env.GOOGLE_MAPS_API_KEY || "",
       },
     });
 
@@ -28,7 +28,7 @@ export const getPlaceDetails = async (placeId: string) => {
     const response = await client.placeDetails({
       params: {
         place_id: placeId,
-        key: "AIzaSyCxQwyVPobLvtCQ5T0lEnBM4203mqODvSk", // Replace with your Google Maps API key
+        key: process.env.GOOGLE_MAPS_API_KEY || "", // Replace with your Google Maps API key
       },
     });
 

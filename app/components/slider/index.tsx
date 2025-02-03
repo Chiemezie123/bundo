@@ -26,12 +26,9 @@ import {
 } from "@react-google-maps/api";
 import { address, div } from "framer-motion/client";
 import GreenLocationIcon from "@/assets/svg2/greenLocationIcon";
+import { toastPosition } from "./data";
+import { formData } from "./index.types";
 
-interface formData {
-  address: string;
-  businessName: string;
-  businessProfilePicture: string;
-}
 const formDatas = {
   address: "",
   businessName: "",
@@ -46,16 +43,7 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
     setValue,
   } = useForm<formData>({ defaultValues: formDatas });
 
-  const toastPosition = {
-    position: "top-left",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
   
-}
 
   const [predictions, setPredictions] = useState<PlaceAutocompleteResult[]>([]);
   const [input, setInput] = useState("");
@@ -82,29 +70,28 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
 
   const handleAddressSelect = async (placeId: string, description: string) => {
     try {
-      // Fetch place details using the placeId
       const placeDetails = await getPlaceDetails(placeId);
 
       if (placeDetails) {
-        // Update the input field with the selected address
-        setValue("address", description); // Autocomplete the input field
-        setInput(description); // Update the input state
+        setValue("address", description); 
+        setInput(description); 
         setGetPlaceDetail(placeDetails);
-        // Optionally, you can also set other form fields or state with the place details
         console.log("Selected Address Details:", placeDetails);
 
         setPredictions([]);
       }
     } catch (error) {
       console.error("Error fetching place details:", error);
-      toast.error(error,toastPosition)
+  
     }
   };
   console.log(getPlaceDetail, dataForm, "lets see");
 
+  
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true); // Set loading state to true
+    setIsLoading(true);
   
     try {
       if (getPlaceDetail) {
@@ -136,6 +123,8 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
       });
       if (response.status === 200) {
         console.log("Location created successfully:", response.data);
+
+        toast.success("successfully created", { ...toastPosition });
         // Optionally, refresh the page or update the UI
         setInput("");
         setDataForm({
