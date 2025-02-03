@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.4.0",
     "@react-google-maps/api": "^2.20.5",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",

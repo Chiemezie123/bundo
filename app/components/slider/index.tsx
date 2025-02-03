@@ -1,74 +1,292 @@
+"use client";
+import React, { useRef, useEffect, useState } from "react";
 import { Typography } from "@/components/typography";
-import React from "react";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 import Plus from "@/assets/svg2/plus";
 import Search from "@/assets/svg2/search";
 import Frame from "@/assets/svg2/frame";
 import Close from "@/assets/svg2/close";
-export default function Slider() {
+import { motion } from "framer-motion";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { HomeModalProps } from "@/components/home-modal";
+import {
+  PlaceAutocompleteResult,
+  PlaceData,
+} from "@googlemaps/google-maps-services-js";
+import { autocomplete, getPlaceDetails } from "@/libs/google";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import {
+  StandaloneSearchBox,
+  useJsApiLoader,
+  GoogleMap,
+} from "@react-google-maps/api";
+import { address, div } from "framer-motion/client";
+import GreenLocationIcon from "@/assets/svg2/greenLocationIcon";
+
+interface formData {
+  address: string;
+  businessName: string;
+  businessProfilePicture: string;
+}
+const formDatas = {
+  address: "",
+  businessName: "",
+  businessProfilePicture: "",
+};
+export default function Slider({ isOpen, onClose }: HomeModalProps) {
+  const inputRef = useRef<google.maps.places.SearchBox | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<formData>({ defaultValues: formDatas });
+
+  const toastPosition = {
+    position: "top-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  
+}
+
+  const [predictions, setPredictions] = useState<PlaceAutocompleteResult[]>([]);
+  const [input, setInput] = useState("");
+  const [dataForm, setDataForm] = useState({
+    id: "",
+    address: "",
+    businessName: "",
+    businessProfilePicture: "",
+    latitude: 0,
+    longitude: 0,
+    image: "",
+  });
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [getPlaceDetail, setGetPlaceDetail] =
+    useState<Partial<PlaceData> | null>(null);
+
+  useEffect(() => {
+    const fetchPredictions = async () => {
+      const predictions = await autocomplete(input);
+      setPredictions(predictions ?? []);
+    };
+    fetchPredictions();
+  }, [input]);
+
+  const handleAddressSelect = async (placeId: string, description: string) => {
+    try {
+      // Fetch place details using the placeId
+      const placeDetails = await getPlaceDetails(placeId);
+
+      if (placeDetails) {
+        // Update the input field with the selected address
+        setValue("address", description); // Autocomplete the input field
+        setInput(description); // Update the input state
+        setGetPlaceDetail(placeDetails);
+        // Optionally, you can also set other form fields or state with the place details
+        console.log("Selected Address Details:", placeDetails);
+
+        setPredictions([]);
+      }
+    } catch (error) {
+      console.error("Error fetching place details:", error);
+      toast.error(error,toastPosition)
+    }
+  };
+  console.log(getPlaceDetail, dataForm, "lets see");
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true); // Set loading state to true
+  
+    try {
+      if (getPlaceDetail) {
+        const {
+          formatted_address,
+          geometry: {
+            location: { lat, lng },
+          }, // Nested destructuring
+          icon,
+          place_id,
+        } = getPlaceDetail;
+  
+        setDataForm((prevState) => ({
+          ...prevState,
+          address: formatted_address ?? prevState.address,
+          latitude: lat ?? prevState.latitude,
+          longitude: lng ?? prevState.longitude,
+          id: place_id ?? prevState.id,
+          image: icon ?? prevState.image,
+        }));
+      }
+      console.log(dataForm, "Updated form data");
+  
+      const endpoint = "https://dny4au0opl.execute-api.us-west-2.amazonaws.com/Stage/";
+      const response = await axios.post(endpoint, dataForm, {
+        headers: {
+          "Content-Type": "application/json", // Set the header
+        },
+      });
+      if (response.status === 200) {
+        console.log("Location created successfully:", response.data);
+        // Optionally, refresh the page or update the UI
+        setInput("");
+        setDataForm({
+          id: "",
+          address: "",
+          businessName: "",
+          businessProfilePicture: "",
+          latitude: 0,
+          longitude: 0,
+          image: "",
+        })
+        window.location.reload();
+      } else {
+        console.error("Failed to create location:", response.statusText);  
+        setInput("");
+        setDataForm({
+          id: "",
+          address: "",
+          businessName: "",
+          businessProfilePicture: "",
+          latitude: 0,
+          longitude: 0,
+          image: "",
+        })
+      }
+    } catch (error) {
+      // Handle errors
+      console.error("Error creating location:", error);
+      toast.error(error?.message || "Something went wrong", { ...toastPosition });
+    } finally {
+      setIsLoading(false); // Set loading state to false
+    }
+  };   
+
   return (
-    <div className="border flex flex-col gap-[32px]">
-      <div className="border bg-white shadow-[0px_3px_5px_rgba(9,30,66,0.2)] h-[59px] flex justify-end items-center px-[24px]">
-        <Close />
-      </div>
-      <div className="flex flex-col gap-[32px] px-[24px]">
-        <div>
-          <Typography
-            variant="h-m"
-            color="mine-shaft-950"
-            font="sans"
-            fontWeight="medium"
-            className="leading-normal"
-          >
-            Add New Business
-          </Typography>
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: isOpen ? "0%" : "100%" }}
+      exit={{ x: "100%" }}
+      transition={{ type: "tween", duration: 0.3 }}
+      className="fixed top-0 right-0 border flex flex-col gap-8 z-50 w-[360px] h-screen bg-white shadow-lg"
+    >
+      <div className="border flex flex-col gap-[32px]">
+        <div className="border bg-white shadow-[0px_3px_5px_rgba(9,30,66,0.2)] h-[59px] flex justify-end items-center px-[24px]">
+          <button onClick={onClose}>
+            <Close />
+          </button>
         </div>
-        <div className="flex flex-col gap-[24px]">
-          <div className="flex items-start flex-col gap-[24px] ">
-            <div className="w-full">
-              <Input
-                name="Enter Address"
-                label="Enter Address"
-                placeholder="21b joy avenue Ajao Estate"
-                icon1={<Search />}
-              />
-            </div>
-            <div className="w-full">
-              <Input
-                name="Business Name"
-                label="Business Name"
-                placeholder="Hair Ventures"
-              />
-            </div>
-            <div className="w-full">
-              <Button
-                Icon={<Plus />}
-                children={"Add Business"}
-                color="white"
-                className="text-c-l w-full"
-              />
-            </div>
+        <div className="flex flex-col gap-[32px] px-[24px] h-[calc(100vh-150px)] overflow-y-auto">
+          <div>
+            <Typography
+              variant="h-m"
+              color="mine-shaft-950"
+              font="sans"
+              fontWeight="medium"
+              className="leading-normal"
+            >
+              Add New Business
+            </Typography>
           </div>
-          <div className="flex flex-col selection:items-start gap-[32px]">
-            <div className="w-full">
-              <Input
-                name="Business Profile Picture"
-                label="Business Profile Picture"
-                placeholder="Image Link"
-                icon1={<Frame />}
-              />
+          <form  onSubmit={handleFormSubmit} className="flex flex-col gap-[24px]">
+            <div className="flex items-start flex-col gap-[24px]">
+              <div className="w-full">
+                <Input
+                  name="address"
+                  label="Enter Address"
+                  placeholder="21b joy avenue Ajao Estate"
+                  icon1={<Search />}
+                  register={register}
+                  value={input}
+                  errorMsg={errors.address}
+                  onChange={(e) => {
+                    setInput(e.target.value);
+                  }}
+                />
+              </div>
+              {predictions.length > 0 && (
+                <div className="border w-full">
+                  {predictions.map((items) => (
+                    <div
+                      key={items.place_id}
+                      className="border cursor-pointer hover:bg-gray-100 p-2 flex items-center gap-2 px-[10px]"
+                      onClick={() =>
+                        handleAddressSelect(items.place_id, items.description)
+                      } // Pass description to autocomplete the input
+                    >
+                      <GreenLocationIcon width="18px" height="18px" />
+                      <Typography
+                        variant="c-l"
+                        color="mine-shaft-900"
+                        font="sans"
+                      >
+                        {items.description}
+                      </Typography>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="w-full">
+                <Input
+                  name="businessName"
+                  label="Business Name"
+                  placeholder="Hair Ventures"
+                  register={register}
+                  errorMsg={errors.businessName}
+                  onChange={(e) => {
+                    setDataForm((props) => ({
+                      ...props,
+                      businessName: e.target.value,
+                    }));
+                  }}
+                />
+              </div>
+              <div className="w-full">
+                {/* <Button
+                  Icon={<Plus />}
+                  children={"Add Business"}
+                  color="white"
+                  className="text-c-l w-full"
+                /> */}
+              </div>
             </div>
-            <div>
-              <Button
-                children={"Save Business "}
-                color="white"
-                className="text-c-l w-full"
-              />
+            <div className="flex flex-col gap-[32px]">
+              <div className="w-full">
+                <Input
+                  name="businessProfilePicture"
+                  label="Business Profile Picture"
+                  placeholder="Image Link"
+                  icon1={<Frame />}
+                  register={register}
+                  onChange={(e) => {
+                    setDataForm((props) => ({
+                      ...props,
+                      businessProfilePicture: e.target.value,
+                    }));
+                  }}
+                />
+              </div>
+              <div>
+                <Button
+                  children={`${isLoading?"submitting..." : "save business"}`}
+                  color="white"
+                  className="text-c-l w-full"
+                  type="submit"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

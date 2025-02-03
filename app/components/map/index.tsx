@@ -7,10 +7,13 @@ import Plus from "@/assets/svg2/plus";
 import GoogleMapComponent from "../googleMapComp";
 import axios from "axios";
 import { BusinessArray } from "../googleMapComp/index.types";
+import Slider from "../slider";
 
 export default function Map() {
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
   const [location , setLocation] = useState<BusinessArray>([]);
+  const [openSlider, setOpenSlider] = useState<boolean>(false);
+
   useEffect(() => {
     const getAllLocation = async () => {
       if (!apiUrl) {
@@ -30,6 +33,34 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
     getAllLocation();
   }, [apiUrl]); 
 
+  const handleFormSubmit = (formData:any) => {
+
+    console.log(formData, "this is formData");
+
+    // try {
+    //   const { lat, lng } = await geocodeAddress(formData.address);
+    //   const response = await fetch('/api/locations/create', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ ...formData, lat, long: lng }),
+    //   });
+
+    //   if (response.ok) {
+    //     window.location.reload();
+    //   } else {
+    //     console.error('Failed to create location');
+    //   }
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
+  };
+
+  console.log(openSlider, 'openSlider')
+  const handleClick =()=>{
+    setOpenSlider((props)=>!props)
+  }
   return (
     <div className="max-w-[1214.833px] mx-auto mt-[50px] flex flex-col gap-[32px] mlg:px-[24px]">
       <div className="flex items-center justify-between mxs:flex-col mxs:items-start mxs:gap-[1rem] ">
@@ -42,7 +73,14 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
             children={"Add Business"}
             color="white"
             className="text-c-l"
+            onClick={handleClick}
           />
+         {openSlider && (
+            <Slider
+              isOpen={openSlider}
+              onClose={() => setOpenSlider((props) => !props)}
+            />
+          )}
         </div>
       </div>
       <div id="map" className="border border-[#C9C2B6] rounded-[20px] w-full h-[678px] flex items-center justify-center">

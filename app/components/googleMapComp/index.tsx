@@ -107,7 +107,7 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
       onUnmount={() => {
         mapRef.current = null;
       }}
-      // mapId="YOUR_MAP_ID" // Add your Map ID here
+      mapId="9c1573fa8e452936" 
     >
       {/* Fallback Markers in case AdvancedMarkerElement fails */}
       {locations.map((location, index) => (

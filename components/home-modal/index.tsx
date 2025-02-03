@@ -4,12 +4,15 @@ import Search from "@/assets/svg2/search";
 import Close from "@/assets/svg2/close";
 import ContactIcon from "@/assets/svg2/contactIcon";
 import { motion } from "framer-motion";
+import { Button } from "../button";
+import Link from "next/link";
 
-interface HomeModalProps{
+export interface HomeModalProps{
     isOpen: boolean;
     onClose: ()=> void
 }
 export default function HomeModal({ isOpen, onClose }:HomeModalProps) {
+
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -32,6 +35,11 @@ export default function HomeModal({ isOpen, onClose }:HomeModalProps) {
           <ContactIcon />
           <Typography>Account</Typography>
         </div>
+      </div>
+      <div className="flex justify-center items-center w-full">
+        <Link href={'/map'}>
+            <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans mlg:w-full mxxs:text-c-m mxxs:px-[40px]" size="primary"/>
+        </Link>
       </div>
     </motion.div>
     )
