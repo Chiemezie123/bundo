@@ -22,7 +22,7 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
       )) as google.maps.MarkerLibrary;
 
       const map = new Map(mapRef.current, {
-        center: { lat: 37.7749, lng: -122.4194 },
+        center: { lat: 9.0820, lng: 8.6753 },
         zoom: 10,
         mapId: "9c1573fa8e452936",
       });
