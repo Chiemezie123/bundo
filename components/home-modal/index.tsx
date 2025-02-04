@@ -38,7 +38,7 @@ export default function HomeModal({ isOpen, onClose }:HomeModalProps) {
       </div>
       <div className="flex justify-center items-center w-full">
         <Link href={'/map'}>
-            <Button color='white' children={"View Page"} className="h-[29px] text-c-lm font-sans mlg:w-full mxxs:text-c-m mxxs:px-[40px]" size="primary"/>
+            <Button color='white' children={"map Page"} className="h-[29px] text-c-lm font-sans mlg:w-full mxxs:text-c-m mxxs:px-[40px]" size="primary"/>
         </Link>
       </div>
     </motion.div>

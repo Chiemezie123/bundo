@@ -13,7 +13,7 @@ export interface formData {
       | "bottom-right"
       | "bottom-center"
       | "bottom-left";
-    autoClose?: number; // Duration in milliseconds
+    autoClose?: number;
     hideProgressBar?: boolean;
     closeOnClick?: boolean;
     pauseOnHover?: boolean;

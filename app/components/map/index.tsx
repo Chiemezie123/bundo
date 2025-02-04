@@ -23,6 +23,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
       try {
         const response = await axios.get(apiUrl);
         const { data } = response?.data;
+        console.log(data, 'map data')
         setLocation(data);
       } catch (error) {
         console.error("Error fetching location data:", error);

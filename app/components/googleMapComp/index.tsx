@@ -1,27 +1,25 @@
-'use client';
-
+"use client";
 import React, { useEffect, useRef } from "react";
-import { BusinessArray } from "./index.types";
-import { getBusinessLocations } from "./getLocation";
+import { Business, BusinessArray } from "./index.types";
 
 interface BusinessListProps {
   businesses: BusinessArray;
 }
 
 const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
-  const mapRef = useRef<HTMLDivElement | null>(null); 
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
 
-  const locations = getBusinessLocations(businesses);
-
   useEffect(() => {
-    
     const initMap = async () => {
       if (!mapRef.current) return;
 
-      const { Map } = (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
-      const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker")) as google.maps.MarkerLibrary;
-
+      const { Map } = (await google.maps.importLibrary(
+        "maps"
+      )) as google.maps.MapsLibrary;
+      const { AdvancedMarkerElement } = (await google.maps.importLibrary(
+        "marker"
+      )) as google.maps.MarkerLibrary;
 
       const map = new Map(mapRef.current, {
         center: { lat: 37.7749, lng: -122.4194 },
@@ -31,31 +29,53 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
 
       markersRef.current.forEach((marker) => (marker.map = null));
       markersRef.current = [];
+      const content = document.createElement("div");
+      content.innerHTML = `
+        <img
+          src="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+          alt="Marker Icon"
+          style="width: 20px; height: 32px;"
+        />
+      `;
 
-      locations.forEach((location, index) => {
+      businesses.forEach((location:Business) => {
+        if (
+          typeof location.lat === "undefined" ||
+          typeof location.long === "undefined"
+        ) {
+          console.warn(
+            `Skipping business "${location.businessName}" due to missing lat/long values.`
+          );
+          return;
+        }      
+        const lat = typeof location.lat === "string" ? parseFloat(location.lat) : location.lat;
+        const lng = typeof location.long === "string" ? parseFloat(location.long) : location.long;
+      
+        if (isNaN(lat) || isNaN(lng)) {
+          console.error(
+            `Invalid lat/lng values for business "${location.businessName}".`
+          );
+          return; 
+        }
+      
         const content = document.createElement("div");
         content.innerHTML = `
           <img
-            src="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+            src="/Capa_1.svg"
             alt="Marker Icon"
-            style="width: 20px; height: 32px;"
+            style="width: 32px; height: 32px;"
           />
         `;
-
+      
         const marker = new AdvancedMarkerElement({
           map: map,
-          position: {
-            lat: location.coordinates[1],
-            lng: location.coordinates[0], 
-          },
-          title: `Business Location ${index + 1}`, 
+          position: { lat, lng },
+          title: location.businessName,
           content: content,
         });
-
+      
         markersRef.current.push(marker);
-      });
-    };
-
+      });}
 
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCxQwyVPobLvtCQ5T0lEnBM4203mqODvSk&libraries=marker`;
@@ -67,11 +87,10 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
     };
     document.head.appendChild(script);
 
-    
     return () => {
       document.head.removeChild(script);
     };
-  }, [locations]);
+  }, [businesses]);
 
   return (
     <div

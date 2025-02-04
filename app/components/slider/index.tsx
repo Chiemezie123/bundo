@@ -32,10 +32,11 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
     address: "",
     businessName: "",
     businessProfilePicture: "",
-    latitude: 0,
-    longitude: 0,
+    lat: 0,
+    long: 0,
     image: "",
   });
+
 
   useEffect(() => {
     const fetchPredictions = async () => {
@@ -44,6 +45,7 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
     };
     fetchPredictions();
   }, [input]);
+
 
   const handleAddressSelect = async (placeId: string, description: string) => {
     try {
@@ -82,8 +84,8 @@ const handleFormSubmit = async (e: React.FormEvent) => {
       setDataForm((prevState) => ({
         ...prevState,
         address: formatted_address ?? prevState.address,
-        latitude: lat ?? prevState.latitude,
-        longitude: lng ?? prevState.longitude,
+        lat: lat ?? prevState.lat,
+        long: lng ?? prevState.long,
         id: place_id ?? prevState.id,
         image: icon ?? prevState.image,
       }));
@@ -99,19 +101,15 @@ const handleFormSubmit = async (e: React.FormEvent) => {
 
 useEffect(() => {
   const submitData = async () => {
-    if (!dataForm.address || !dataForm.latitude || !dataForm.longitude) {
+    if (!dataForm.address || !dataForm.lat || !dataForm.long) {
       return; 
     }
     setIsLoading(true);
 
     try {
       const endpoint = "https://dny4au0opl.execute-api.us-west-2.amazonaws.com/Stage/";
-
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(dataForm),
       });
 
@@ -127,8 +125,8 @@ useEffect(() => {
           address: "",
           businessName: "",
           businessProfilePicture: "",
-          latitude: 0,
-          longitude: 0,
+          lat: 0,
+          long: 0,
           image: "",
         });
 
@@ -141,8 +139,8 @@ useEffect(() => {
           address: "",
           businessName: "",
           businessProfilePicture: "",
-          latitude: 0,
-          longitude: 0,
+          lat: 0,
+          long: 0,
           image: "",
         });
       }
@@ -154,10 +152,10 @@ useEffect(() => {
     }
   };
 
-  if (dataForm.address && dataForm.latitude && dataForm.longitude) {
+  if (dataForm.address && dataForm.lat && dataForm.long) {
     submitData();
   }
-}, [dataForm]); // Run this effect whenever dataForm changes
+}, [dataForm]);
 
   return (
     <motion.div
