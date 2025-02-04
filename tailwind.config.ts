@@ -70,7 +70,7 @@ const config: Config = {
         '700': '#53514b',
         '800': '#484742',
         '900': '#3f3e3a',
-        '950': '#302f2c',//small text
+        '950': '#302f2c',
     },
       'palm-green': {
         '50': '#f2fbf4',
@@ -83,7 +83,7 @@ const config: Config = {
         '700': '#266f38',
         '800': '#235830',
         '900': '#1e492a',
-        '950': '#0a2211',//list header
+        '950': '#0a2211',
     },
       'fuscous-gray': {
         '50': '#f6f5f5',
@@ -104,7 +104,7 @@ const config: Config = {
         '200': '#c3efce',
         '300': '#93e2a8',
         '400': '#5dcb7a',
-        '500': '#34a853', //button
+        '500': '#34a853', 
         '600': '#289144',
         '700': '#237238',
         '800': '#205b30',
@@ -122,14 +122,14 @@ const config: Config = {
         '700': '#276e39',
         '800': '#235830',
         '900': '#1f482a',
-        '950': '#11381c',//header footer
+        '950': '#11381c',
     },
     
     
-        //Text
+        
         "text-default": "var(--color-text-default)",
         "text-light": "var(--color-text-light)",
-        //background
+
         listContainer:"#FCFBF8",
         FAQ:"#F1E9DB",
       },
@@ -185,11 +185,11 @@ const config: Config = {
           "box-shadow": "0px -1px 0px 0px #DDDDDD",
         },
         ".hideScrollBar": {
-          "-ms-overflow-style": "none", // IE and Edge
-          "scrollbar-width": "none", // Firefox
+          "-ms-overflow-style": "none", 
+          "scrollbar-width": "none",
         },
         ".hideScrollBar::-webkit-scrollbar": {
-          display: "none", // Hide scrollbar in Webkit browsers
+          display: "none", 
         },
       };
 

@@ -1,4 +1,6 @@
-export const toastPosition = {
+import { ToastPositionProps } from "./index.types"
+
+export const toastPosition:ToastPositionProps = {
     position: "top-left",
     autoClose: 5000,
     hideProgressBar: false,
@@ -8,3 +10,5 @@ export const toastPosition = {
     progress: undefined,
   
 }
+
+

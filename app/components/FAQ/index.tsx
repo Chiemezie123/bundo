@@ -1,5 +1,4 @@
 'use Client'
-
 import React from 'react'
 import FAQheader from './FAQheader'
 import FAQbody from './FAQbody'

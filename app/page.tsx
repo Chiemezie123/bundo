@@ -10,7 +10,6 @@ export default function Home() {
   const { token, notificationPermissionStatus } = useFcmToken();
 
   useEffect(() => {
-    // Register service worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/firebase-messaging-sw.js")

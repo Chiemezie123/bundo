@@ -26,8 +26,8 @@ export default function CardSession(props:buttonProps) {
         {listingCard?.length > 0 ? (
           listingCard.map((items, index) => (
             <Cards
-              key={items.id ?? index} // Use `id` if available
-              image={items.image ?? "/default-image.png"} // Ensure valid image
+              key={items.id ?? index} 
+              image={items.image ?? "/default-image.png"}
               brandName={items.brandName}
               tags1={items.tags1}
               tags2={items.tags2}

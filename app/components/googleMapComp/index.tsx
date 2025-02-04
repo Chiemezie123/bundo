@@ -19,22 +19,19 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
     const initMap = async () => {
       if (!mapRef.current) return;
 
-      // Request needed libraries
       const { Map } = (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
       const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker")) as google.maps.MarkerLibrary;
 
-      // Initialize the map
+
       const map = new Map(mapRef.current, {
         center: { lat: 37.7749, lng: -122.4194 },
         zoom: 10,
         mapId: "9c1573fa8e452936",
       });
 
-      // Clear existing markers
       markersRef.current.forEach((marker) => (marker.map = null));
       markersRef.current = [];
 
-      // Create new markers
       locations.forEach((location, index) => {
         const content = document.createElement("div");
         content.innerHTML = `
@@ -52,14 +49,14 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
             lng: location.coordinates[0], 
           },
           title: `Business Location ${index + 1}`, 
-          content: content, // Add custom icon
+          content: content,
         });
 
         markersRef.current.push(marker);
       });
     };
 
-    // Load the Google Maps script
+
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCxQwyVPobLvtCQ5T0lEnBM4203mqODvSk&libraries=marker`;
     script.async = true;
@@ -70,7 +67,7 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
     };
     document.head.appendChild(script);
 
-    // Cleanup function
+    
     return () => {
       document.head.removeChild(script);
     };

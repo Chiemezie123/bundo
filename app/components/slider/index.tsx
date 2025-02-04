@@ -3,50 +3,30 @@ import React, { useRef, useEffect, useState } from "react";
 import { Typography } from "@/components/typography";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
-import Plus from "@/assets/svg2/plus";
 import Search from "@/assets/svg2/search";
 import Frame from "@/assets/svg2/frame";
 import Close from "@/assets/svg2/close";
 import { motion } from "framer-motion";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { HomeModalProps } from "@/components/home-modal";
 import {
   PlaceAutocompleteResult,
   PlaceData,
 } from "@googlemaps/google-maps-services-js";
 import { autocomplete, getPlaceDetails } from "@/libs/google";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import {
-  StandaloneSearchBox,
-  useJsApiLoader,
-  GoogleMap,
-} from "@react-google-maps/api";
 import { address, div } from "framer-motion/client";
 import GreenLocationIcon from "@/assets/svg2/greenLocationIcon";
 import { toastPosition } from "./data";
-import { formData } from "./index.types";
 
-const formDatas = {
-  address: "",
-  businessName: "",
-  businessProfilePicture: "",
-};
+
+
 export default function Slider({ isOpen, onClose }: HomeModalProps) {
-  const inputRef = useRef<google.maps.places.SearchBox | null>(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<formData>({ defaultValues: formDatas });
-
-  
-
   const [predictions, setPredictions] = useState<PlaceAutocompleteResult[]>([]);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [getPlaceDetail, setGetPlaceDetail] = useState<Partial<PlaceData> | null>(null);
+
   const [dataForm, setDataForm] = useState({
     id: "",
     address: "",
@@ -56,9 +36,6 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
     longitude: 0,
     image: "",
   });
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [getPlaceDetail, setGetPlaceDetail] =
-    useState<Partial<PlaceData> | null>(null);
 
   useEffect(() => {
     const fetchPredictions = async () => {
@@ -73,7 +50,6 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
       const placeDetails = await getPlaceDetails(placeId);
 
       if (placeDetails) {
-        setValue("address", description); 
         setInput(description); 
         setGetPlaceDetail(placeDetails);
         console.log("Selected Address Details:", placeDetails);
@@ -82,50 +58,69 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
       }
     } catch (error) {
       console.error("Error fetching place details:", error);
-  
+   
     }
   };
-  console.log(getPlaceDetail, dataForm, "lets see");
 
-  
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-  
-    try {
-      if (getPlaceDetail) {
-        const {
-          formatted_address,
-          geometry: {
-            location: { lat, lng },
-          }, // Nested destructuring
-          icon,
-          place_id,
-        } = getPlaceDetail;
-  
-        setDataForm((prevState) => ({
-          ...prevState,
-          address: formatted_address ?? prevState.address,
-          latitude: lat ?? prevState.latitude,
-          longitude: lng ?? prevState.longitude,
-          id: place_id ?? prevState.id,
-          image: icon ?? prevState.image,
-        }));
-      }
-      console.log(dataForm, "Updated form data");
-  
-      const endpoint = "https://dny4au0opl.execute-api.us-west-2.amazonaws.com/Stage/";
-      const response = await axios.post(endpoint, dataForm, {
-        headers: {
-          "Content-Type": "application/json", // Set the header
+
+const handleFormSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  try {
+    if (getPlaceDetail) {
+      const {
+        formatted_address,
+        geometry: {
+          location: { lat, lng },
         },
-      });
-      if (response.status === 200) {
-        console.log("Location created successfully:", response.data);
+        icon,
+        place_id,
+      } = getPlaceDetail as PlaceData;
 
-        toast.success("successfully created", { ...toastPosition });
-        // Optionally, refresh the page or update the UI
+      setDataForm((prevState) => ({
+        ...prevState,
+        address: formatted_address ?? prevState.address,
+        latitude: lat ?? prevState.latitude,
+        longitude: lng ?? prevState.longitude,
+        id: place_id ?? prevState.id,
+        image: icon ?? prevState.image,
+      }));
+    }
+  } catch (error) {
+    console.error("Error updating form data:", error);
+    toast.error("Failed to update form data", { ...toastPosition });
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
+useEffect(() => {
+  const submitData = async () => {
+    if (!dataForm.address || !dataForm.latitude || !dataForm.longitude) {
+      return; 
+    }
+    setIsLoading(true);
+
+    try {
+      const endpoint = "https://dny4au0opl.execute-api.us-west-2.amazonaws.com/Stage/";
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataForm),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("Location created successfully:", responseData);
+
+        toast.success("Successfully created", { ...toastPosition });
+
         setInput("");
         setDataForm({
           id: "",
@@ -135,10 +130,11 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
           latitude: 0,
           longitude: 0,
           image: "",
-        })
+        });
+
         window.location.reload();
       } else {
-        console.error("Failed to create location:", response.statusText);  
+        console.error("Failed to create location:", response.statusText);
         setInput("");
         setDataForm({
           id: "",
@@ -148,16 +144,20 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
           latitude: 0,
           longitude: 0,
           image: "",
-        })
+        });
       }
-    } catch (error) {
-      // Handle errors
+    } catch (error:any) {
       console.error("Error creating location:", error);
       toast.error(error?.message || "Something went wrong", { ...toastPosition });
     } finally {
-      setIsLoading(false); // Set loading state to false
+      setIsLoading(false);
     }
-  };   
+  };
+
+  if (dataForm.address && dataForm.latitude && dataForm.longitude) {
+    submitData();
+  }
+}, [dataForm]); // Run this effect whenever dataForm changes
 
   return (
     <motion.div
@@ -193,9 +193,7 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
                   label="Enter Address"
                   placeholder="21b joy avenue Ajao Estate"
                   icon1={<Search />}
-                  register={register}
                   value={input}
-                  errorMsg={errors.address}
                   onChange={(e) => {
                     setInput(e.target.value);
                   }}
@@ -209,7 +207,7 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
                       className="border cursor-pointer hover:bg-gray-100 p-2 flex items-center gap-2 px-[10px]"
                       onClick={() =>
                         handleAddressSelect(items.place_id, items.description)
-                      } // Pass description to autocomplete the input
+                      } 
                     >
                       <GreenLocationIcon width="18px" height="18px" />
                       <Typography
@@ -228,8 +226,6 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
                   name="businessName"
                   label="Business Name"
                   placeholder="Hair Ventures"
-                  register={register}
-                  errorMsg={errors.businessName}
                   onChange={(e) => {
                     setDataForm((props) => ({
                       ...props,
@@ -239,12 +235,6 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
                 />
               </div>
               <div className="w-full">
-                {/* <Button
-                  Icon={<Plus />}
-                  children={"Add Business"}
-                  color="white"
-                  className="text-c-l w-full"
-                /> */}
               </div>
             </div>
             <div className="flex flex-col gap-[32px]">
@@ -254,7 +244,6 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
                   label="Business Profile Picture"
                   placeholder="Image Link"
                   icon1={<Frame />}
-                  register={register}
                   onChange={(e) => {
                     setDataForm((props) => ({
                       ...props,

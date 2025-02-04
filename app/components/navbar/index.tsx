@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import BundoIcon from '@/assets/svg2/bundoIcon'
 import ShoppingCartIcon from '@/assets/svg2/shoppingCartIcon'
 import Image from 'next/image'
-import ShoppingImage from "@/assets/images/shopping bag.svg"
-import Menu from '@/assets/images/Menu.svg'
 import { Typography } from '@/components/typography'
 import Hamburger from "@/assets/svg2/hamburger"
 import countImage from "@/assets/images/Count.png"
@@ -12,7 +10,7 @@ import HomeModal from '@/components/home-modal'
 import BigShoppingCartIcon from '@/assets/svg2/bigShoppingCartIcon'
 export default function NavBar() {
 
-    const [isOpen, setIsOpen]= useState<boolean>(false);
+const [isOpen, setIsOpen]= useState<boolean>(false);
 
   return (
         <section className=' relative max-w-[1214.833px] mx-auto flex justify-between items-center mxl:px-[24px] mxs:px-[18px] mxxs:px-[10px] mxs:bg-white mxs:shadow-md'>
@@ -32,11 +30,9 @@ export default function NavBar() {
                     </div>
                 </div>
                 <div className='flex w-[56px] h-[45px] justify-center items-center gap-[10px]'>
-                {/* <Image src={ShoppingImage} alt='shopping-image' width={24} height={24}/> */}
                 <BigShoppingCartIcon/>
                 </div>
                 <div className='flex w-[56px] h-[45px] justify-center items-center gap-[10px] cursor-pointer ' onClick={()=>{setIsOpen((props)=>!props)}}>
-                {/* <Image src={Menu} alt='shopping-image' width={24} height={24}/> */}
                 <Hamburger/>
                 </div>
                 {isOpen && <HomeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}

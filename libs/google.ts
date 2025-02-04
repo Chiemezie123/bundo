@@ -22,13 +22,12 @@ export const autocomplete = async (input: string) => {
 
 
 
-// Function to fetch place details using placeId
 export const getPlaceDetails = async (placeId: string) => {
   try {
     const response = await client.placeDetails({
       params: {
         place_id: placeId,
-        key: process.env.GOOGLE_MAPS_API_KEY || "", // Replace with your Google Maps API key
+        key: process.env.GOOGLE_MAPS_API_KEY || "",
       },
     });
 

@@ -1,11 +1,9 @@
 interface Location {
-    coordinates: [number, number]; // Array of two numbers (longitude, latitude)
-    type: "Point"; // Assuming the type is always "Point"
+    coordinates: [number, number];
+    type: "Point";
   }
   
   interface VendorStatus {
-    // Define the structure of the objects inside the `vendor_status` array
-    // Replace `any` with the actual structure if known
     [key: string]: any;
   }
   
@@ -14,7 +12,7 @@ interface Location {
     business_profile_picture: string;
     business_type: string;
     categories: string[];
-    createdAt: string; // ISO date string
+    createdAt: string; 
     description: string;
     dist: {
       calculated: number;
@@ -24,8 +22,8 @@ interface Location {
     name: string;
     noOfLikes: number;
     plan: string;
-    products_services: any[]; // Replace `any` with the actual type if known
-    reviews: any[]; // Replace `any` with the actual type if known
+    products_services: any[]; 
+    reviews: any[];
     total_ratings: number;
     total_reviews: number;
     vendorId: string;

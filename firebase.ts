@@ -1,4 +1,4 @@
-// firebase.js
+
 import { initializeApp } from "firebase/app";
 import { onMessage, getMessaging, getToken, isSupported  } from "firebase/messaging";
 
@@ -11,7 +11,7 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
   };
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 
 const messaging = async () => {
@@ -44,31 +44,3 @@ const messaging = async () => {
 
 
 
-
-// export const onMessageListener = () =>
-//     new Promise((resolve) => {
-//       onMessage(messaging, (payload) => {
-//         resolve(payload);
-//       });
-//     });
-
-
-
-
-// Request permission and get token
-// export const requestForToken = async () => {
-//     try {
-//         const permission = await Notification.requestPermission();
-//         if (permission === "granted") {
-//             const token = await getToken(messaging, {
-//                 vapidKey: "YOUR_VAPID_KEY", // Get this from Firebase Console > Cloud Messaging
-//               });
-//               console.log("Token:", token);
-//               return token;
-//           } else {
-//               console.error("Permission denied");
-//           }
-//       } catch (error) {
-//           console.error("Error getting token:", error);
-//       }
-//   };

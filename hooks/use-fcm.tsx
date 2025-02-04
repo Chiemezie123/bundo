@@ -7,32 +7,9 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Typography } from "@/components/typography";
+import { getNotificationPermissionAndToken } from "./helper";
 
 
-
-async function getNotificationPermissionAndToken() {
- 
-  if (!("Notification" in window)) {
-    console.info("This browser does not support desktop notification");
-    return null;
-  }
-
-
-  if (Notification.permission === "granted") {
-    return await fetchToken();
-  }
-
- 
-  if (Notification.permission !== "denied") {
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      return await fetchToken();
-    }
-  }
-
-  console.log("Notification permission not granted.");
-  return null;
-}
 
 const useFcmToken = () => {
   const [notificationPermissionStatus, setNotificationPermissionStatus] = useState<NotificationPermission | null>(null); // State to store the notification permission status.
@@ -79,12 +56,17 @@ const useFcmToken = () => {
     isLoading.current = false;
   };
 
+
+
   useEffect(() => {
     if ("Notification" in window) {
       loadToken();
     }
   }, []);
 
+
+
+  
   useEffect(() => {
     const setupListener = async () => {
         if (!token) return;
@@ -95,10 +77,9 @@ const useFcmToken = () => {
           const m = await messaging();
           if (!m) return;
       
-          const unsubscribe = onMessage(m, (payload) => {
+          const subscribe = onMessage(m, (payload) => {
             if (Notification.permission !== "granted") return;
             console.log("Foreground push notification received:", payload);
-      
             if (payload.notification) {
               toast.info(
                 <div>
@@ -118,7 +99,7 @@ const useFcmToken = () => {
             }
           });
       
-          return unsubscribe;
+          return subscribe;
         } catch (error) {
           console.error("Error setting up onMessage listener:", error);
         }
@@ -137,7 +118,7 @@ const useFcmToken = () => {
   }, [token]);
   
 
-  return { token, notificationPermissionStatus }; // Return the token and permission status.
+  return { token, notificationPermissionStatus }; 
 };
 
 export default useFcmToken;

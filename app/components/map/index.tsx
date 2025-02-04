@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/button";
 import { Typography } from "@/components/typography";
-import EmptyState from "@/components/emptyLocationState";
 import Plus from "@/assets/svg2/plus";
 import GoogleMapComponent from "../googleMapComp";
 import axios from "axios";

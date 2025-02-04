@@ -8,6 +8,7 @@ import Linkedin from "@/assets/svg2/linkedin";
 import Twitter from "@/assets/svg2/twitter";
 
 export default function FooterBody() {
+  
   return (
     <div className="flex gap-[100px] mxs:flex-col-reverse">
       <div className="relative w-[377px] h-[562px] rounded-[15.994px] mmd:hidden mxs:block mxxs:w-[340px]">

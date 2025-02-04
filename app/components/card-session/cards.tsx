@@ -1,8 +1,6 @@
 'use client'
-
 import { Typography } from "@/components/typography";
 import React from "react";
-
 import Location from "@/assets/svg2/location";
 import TagIcon from "@/assets/svg2/tagIcon";
 import Star from "@/assets/svg2/star";
@@ -10,7 +8,7 @@ import { Button } from "@/components/button";
 import Image from "next/image";
 import Love from "@/assets/svg2/love";
 import { cardProps } from "./index.types";
-import Plus from "@/assets/svg2/plus";
+
 
 export default function Cards(props: cardProps) {
   const {
