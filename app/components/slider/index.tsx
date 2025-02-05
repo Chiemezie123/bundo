@@ -48,6 +48,7 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
 
 
   const handleAddressSelect = async (placeId: string, description: string) => {
+
     try {
       const placeDetails = await getPlaceDetails(placeId);
 
@@ -67,6 +68,7 @@ export default function Slider({ isOpen, onClose }: HomeModalProps) {
 
 
 const handleFormSubmit = async (e: React.FormEvent) => {
+  
   e.preventDefault();
   setIsLoading(true);
 

@@ -33,6 +33,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || " ";
     getAllLocation();
   }, [apiUrl]); 
 
+  console.log(location, "location is here")
 
   const handleClick =()=>{
     setOpenSlider((props)=>!props)

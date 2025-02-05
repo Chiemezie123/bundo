@@ -3,6 +3,7 @@
 import { Client } from "@googlemaps/google-maps-services-js";
 
 const client = new Client();
+
 export const autocomplete = async (input: string) => {
   if (!input) return [];
 

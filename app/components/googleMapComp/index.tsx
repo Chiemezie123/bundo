@@ -21,6 +21,7 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
         "marker"
       )) as google.maps.MarkerLibrary;
 
+
       const map = new Map(mapRef.current, {
         center: { lat: 9.0820, lng: 8.6753 },
         zoom: 10,
@@ -29,14 +30,7 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
 
       markersRef.current.forEach((marker) => (marker.map = null));
       markersRef.current = [];
-      const content = document.createElement("div");
-      content.innerHTML = `
-        <img
-          src="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-          alt="Marker Icon"
-          style="width: 20px; height: 32px;"
-        />
-      `;
+    
 
       businesses.forEach((location:Business) => {
         if (
@@ -69,7 +63,7 @@ const GoogleMapComponent: React.FC<BusinessListProps> = ({ businesses }) => {
       
         const marker = new AdvancedMarkerElement({
           map: map,
-          position: { lat, lng },
+          position: {lat, lng},
           title: location.businessName,
           content: content,
         });
